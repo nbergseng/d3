@@ -227,15 +227,19 @@ d3.interpolateObject = function(a, b) {
       c = {},
       k;
   for (k in a) {
-    if (k in b) {
-      i[k] = d3_interpolateByName(k)(a[k], b[k]);
-    } else {
-      c[k] = a[k];
+    if (Object.prototype.hasOwnProperty.call(k, a)) {
+      if (k in b) {
+        i[k] = d3_interpolateByName(k)(a[k], b[k]);
+      } else {
+        c[k] = a[k];
+      }
     }
   }
   for (k in b) {
-    if (!(k in a)) {
-      c[k] = b[k];
+    if (Object.prototype.hasOwnProperty.call(k, a)) {
+      if (!(k in a)) {
+        c[k] = b[k];
+      }
     }
   }
   return function(t) {
